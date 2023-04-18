@@ -1,12 +1,15 @@
-import { useState } from 'react'
-
+import ThemeSwitcher from './components/ThemeSwitcher';
+import Todo from './pages/Todo';
 
 function App() {
-  const [title] = useState('Hello React! (From Vue:>)')
-
   return (
-    <div className="flex justify-center mt-60">
-      <h5 className='text-5xl'>{title}</h5>
+    <div>
+      <div className="mt-4 flex justify-end">
+        <ThemeSwitcher />
+      </div>
+      <div className="mt-20">
+        <Todo />
+      </div>
     </div>
   )
 }

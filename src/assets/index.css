@@ -1,3 +1,49 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.app-theme {
+    @apply
+    dark:bg-slate-900 
+    text-dark
+    dark:text-light
+    px-1 
+    sm:px-10 
+    md:px-20
+}
+
+::-webkit-scrollbar {
+   @apply
+   w-3
+   h-3
+    bg-slate-600
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    @apply
+    rounded-full
+    bg-slate-500
+    hover:bg-slate-400
+  }
+
+tr {
+  @apply
+  bg-white 
+  border-b 
+  dark:bg-slate-900 
+  dark:border-gray-700 
+  hover:bg-gray-50 
+  dark:hover:bg-slate-800 
+  duration-300
+}
+
+th {
+    @apply
+    px-6 py-3
+}
+
+
+td {
+    @apply
+    px-6 py-4
+}

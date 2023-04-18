@@ -1,0 +1,51 @@
+.toggle-switch {
+    @apply
+    w-11 
+    h-6 
+    rounded-full 
+    peer-checked:after:translate-x-full 
+    after:content-[''] 
+    after:absolute 
+    after:top-[2px] 
+    after:left-[2px]  
+    after:rounded-full 
+    after:border 
+    after:h-5 
+    after:w-5 
+    after:transition-all
+}
+.toggle-primary {
+    @apply
+    bg-slate-600
+    dark:bg-slate-400
+    peer-checked:bg-blue-600
+    after:bg-white
+    shadow-md
+    shadow-slate-700
+    dark:shadow-slate-400
+    peer-checked:shadow-blue-500
+    duration-500
+}
+
+.toggle-secondary {
+    @apply
+    bg-red-600
+    peer-checked:bg-green-600
+    after:bg-white
+    after:border-gray-400
+    shadow-md
+    shadow-red-500
+    peer-checked:shadow-green-500
+}
+
+.toggle-theme {
+    @apply
+    bg-slate-700
+    peer-checked:bg-slate-50
+    after:bg-light
+    after:border-gray-300
+    shadow-md
+    shadow-slate-800
+    peer-checked:shadow-slate-50
+    peer-checked:after:bg-dark
+}
