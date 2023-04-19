@@ -17,6 +17,7 @@ export default function useCrud() {
 
     const show = (id) => {
         const data = index()
+        console.log('asdasd')
         return data.find(data => data.id === id)
     }
 
@@ -24,6 +25,7 @@ export default function useCrud() {
         const data = index()
         const todoIndex = data.findIndex(item => item.id === id)
         data[todoIndex] = { ...data[todoIndex], ...item }
+        console.log(id, item)
         write(data)
     }
 

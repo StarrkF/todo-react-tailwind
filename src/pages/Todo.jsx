@@ -11,6 +11,7 @@ function Todo() {
     const head = ['Id', 'Goal', 'Completion Status', 'Action']
     const [data, setData] = useState([]);
     const [goal, setGoal] = useState("");
+    // const [todo, setTodo] = useState({id: null, goal:null, status:false});
     const [todo, setTodo] = useState({});
     const [storeArea, setStoreArea] = useState(true);
     const [editArea, setEditArea] = useState(false);
@@ -37,36 +38,60 @@ function Todo() {
 
     const updateTodo = () => {
         update(todo.id, todo)
-        // cancel()
         getData()
     }
 
     const updateStatus = (id) => {
-        console.log(id)
-        const todoCopy = { ...show(id) };
-        todoCopy.status = !todoCopy.status;
-        setTodo(todoCopy);
+        const todoToUpdate = show(id);
+        const updatedTodo = { ...todoToUpdate, status: !todoToUpdate.status };
+        setTodo((prevTodo) => {
+          const newTodo = { ...prevTodo, ...updatedTodo };
+          return newTodo;
+        });
         updateTodo();
+      };
+
+      const cancel = () => {
+        setTodo({})
+        setEditArea(false)
+        setStoreArea(true)
     }
 
     useEffect(() => {
         getData();
     }, []);
 
+    
     return (
         <div>
-            <BasicInput label="Save Goal" className="max-w-6xl" value={goal} onUpdate={setGoal} onKeyUp={(e) => { if (e.key === 'Enter') storeTodo() }} />
             <CardBasic title="Todo App" customStyle={{ header: 'text-center' }} glow>
+                {storeArea && !editArea &&  (
+                    <div className="flex flex-col sm:flex-row mb-6">
+                        <BasicInput label="Save Goal" className="max-w-6xl" modelValue={goal} onUpdate={setGoal} onKeyUp={(e) => { if (e.key === 'Enter') storeTodo() }} />
+                        <CustomButton color="theme" className="flex-1 mt-4 sm:mt-0 ml-0 sm:ml-4"  onClick={storeTodo}>Add</CustomButton>
+                    </div>
+                )}
+                {editArea && !storeArea &&(
+                    <div className="flex flex-col sm:flex-row mb-6">
+                        <BasicInput label="Save Goal" className="max-w-6xl" modelValue={todo.goal}  onUpdate={(value) => setTodo({...todo, goal: value})} onKeyUp={(e) => { if (e.key === 'Enter') updateTodo() }} />
+                        <CustomButton color="secondary" className="flex-1 mt-4 sm:mt-0 ml-0 sm:ml-4"  onClick={updateTodo}>Update</CustomButton>
+                        <CustomButton color="danger" className="flex-1 mt-4 sm:mt-0 ml-0 sm:ml-4"  onClick={cancel}>Cancel</CustomButton>
+                    </div>
+                )}
                 <DataTable head={head}>
                     {data.map((item) => (
                         <tr key={item.id}>
                             <td>{item.id}</td>
                             <td>{item.goal}</td>
                             <td>
-                                <ToggleSwitch value={item.status} onChange={() => updateStatus(item.id)} />
+                            <ToggleSwitch
+                                color="primary"
+                                modelValue={item.status}
+                                onUpdate:modelValue={() => updateStatus(item.id)}
+                            />
                             </td>
                             <td className="flex flex-col md:flex-row">
-                                <CustomButton onClick={() => showTodo(item.id)}>Update</CustomButton>
+                                <CustomButton onClick={() => {showTodo(item.id)}}>Update</CustomButton>
                                 <CustomButton className="mt-4 md:mt-0 ml-0 md:ml-4" color="danger" onClick={() => showTodo(item.id)}>Delete</CustomButton>
                             </td>
                         </tr>
